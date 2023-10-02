@@ -27,15 +27,13 @@ jobs:
           aws-region: ${{ env.REGION }}
 
       - name: Install Dependencies
-        run: |
-          node --version
-          npm ci
+        run: npm ci
 
       - name: Build Static Website
         run: npm run build
 
-      - name: List directory for debugging
-        run: ls -la
+      - name: List directory contents post-build
+        run: ls -al
 
       - name: Upload files to the S3 Bucket
         run: |
