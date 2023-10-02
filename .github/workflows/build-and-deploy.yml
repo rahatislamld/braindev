@@ -29,10 +29,13 @@ jobs:
       - name: Install Dependencies
         run: |
           node --version
-          npm install
+          npm ci
 
       - name: Build Static Website
         run: npm run build
+
+      - name: List directory for debugging
+        run: ls -la
 
       - name: Upload files to the S3 Bucket
         run: |
