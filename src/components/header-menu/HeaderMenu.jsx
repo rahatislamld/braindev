@@ -19,7 +19,7 @@ export default function HeaderMenu() {
           location.pathname === "/dashboard" && "border-b-4 border-green-500"
         } h-full pl-2 pr-2 text-center hover:border-b-4 hover:border-green-500`}
       >
-        <p className="font-mono font-semibold text-white">Dashboard</p>
+        <p className="font-mono font-semibold text-white">Dash</p>
       </Link>
       <Link
         to="/instruction"
