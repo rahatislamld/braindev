@@ -32,15 +32,15 @@ jobs:
       - name: Build Static Website
         run: npm run build
 
-      - name: Cache build artifacts
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ runner.os }}-build-${{ hashFiles('package.json') }}
+      - name: List directory contents post-build
+        run: ls -al
 
-      - name: Deploy website to CloudFront
-        uses: actions/cloudfront-deploy@v1
-        with:
-          distribution-id: ${{ env.DIST_ID }}
-          path: build
-          invalidation: / *
+      - name: Upload files to the S3 Bucket
+        run: |
+          aws s3 sync --delete --acl public-read ${{ env.DIST }} s3://${{ env.BUCKET }}
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.DIST_ID }} \
+            --paths "/*"
