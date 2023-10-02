@@ -29,11 +29,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build Static Website
-        run: npm run build
-
-      - name: List directory contents post-build
-        run: ls -al
+      - name: Build Static Website and Show Output
+        run: |
+          npm run build
+          echo "Listing after build:"
+          ls -al
 
       - name: Upload files to the S3 Bucket
         run: |
