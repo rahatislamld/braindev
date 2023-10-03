@@ -1,0 +1,27 @@
+name: Create Pull Request to Develop
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  create_pr_to_develop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+
+      - name: Create Pull Request to Develop
+        if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'hotfix'
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh auth login --with-token <<<"${PAT_TOKEN}"
+          gh pr create --base=develop --head=hotfix --title="New Pull Request to Develop" --body="This is a new pull request to merge hotfix changes into the develop branch."

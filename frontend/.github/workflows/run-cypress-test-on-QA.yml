@@ -1,0 +1,25 @@
+name: Run cypress test on QA PR
+
+on:
+  push:
+    branches:
+      - QA
+  pull_request:
+    branches:
+      - QA
+  workflow_dispatch:
+
+jobs:
+  cypress_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm run dev
+          browser: chrome

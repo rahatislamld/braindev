@@ -1,0 +1,21 @@
+name: Run Unit test on feature push
+
+on:
+  push:
+    branches:
+      - "feature/*"
+  pull_request:
+    branches:
+      - "feature/*"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test
